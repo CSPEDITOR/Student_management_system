@@ -20,11 +20,11 @@ function UserForm() {
   };
 
   return (
-    <div className="max-w-lg mx-auto mt-16 p-8 bg-white shadow-xl rounded-2xl">
+    <div className="w-1/2 mx-auto mt-16 p-8 bg-white shadow-xl rounded-2xl">
       <h1 className="text-3xl font-bold text-green-700 mb-6 text-center">
         User Info Form
       </h1>
-      <form onSubmit={handleSubmit} className="space-y-5">
+      <form onSubmit={handleSubmit} className="space-y-5 text-start">
         <div>
           <label className="block text-gray-700 font-medium mb-1">
             JEE Application Number

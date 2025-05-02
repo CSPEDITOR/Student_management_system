@@ -7,15 +7,25 @@ function UserForm() {
     rank: "",
     phone: "",
     email: "",
+    password: "",
   });
+
+  const [profileImg, setProfileImg] = useState(null);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setProfileImg(URL.createObjectURL(file));
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+    console.log({ ...formData, profileImg });
     alert("Form submitted successfully!");
   };
 
@@ -25,6 +35,24 @@ function UserForm() {
         User Info Form
       </h1>
       <form onSubmit={handleSubmit} className="space-y-5 text-start">
+        {/* Profile Image Upload */}
+        <div>
+          <label className="block text-gray-700 font-medium mb-1">Profile Image</label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            className="block w-full border border-green-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+          />
+          {profileImg && (
+            <img
+              src={profileImg}
+              alt="Profile Preview"
+              className="mt-4 w-32 h-32 rounded-full object-cover border-4 border-green-500 shadow"
+            />
+          )}
+        </div>
+
         <div>
           <label className="block text-gray-700 font-medium mb-1">
             JEE Application Number
@@ -86,6 +114,7 @@ function UserForm() {
             className="w-full border border-green-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
           />
         </div>
+
         <div>
           <label className="block text-gray-700 font-medium mb-1">Password</label>
           <input

@@ -1,10 +1,8 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+
 import './App.css'
 import UserForm from './component/share/UserForm'
 import Login from './component/share/Login'
-import Home from './component/Home'
+
 
 // ✅ ADD THESE IMPORTS
 import {
@@ -12,6 +10,12 @@ import {
   RouterProvider,
 } from 'react-router-dom'
 import StudentProfilePage from './component/StudentProfilePage'
+import Navbar from './component/share/Navbar'
+import Footer from './component/share/Footer'
+import WelcomeHome from './component/WelcomeHome'
+import About from './component/About'
+import Home from './component/Home'
+import New from './component/New'
 
 function App() {
   const appRouter = createBrowserRouter([
@@ -24,14 +28,36 @@ function App() {
       element: <UserForm />
     },
     {
-      path: "/student/home",
-      element: <Home />
+      path: "/student/welcomehome",
+      element: <WelcomeHome />
     },
     {
       path: "/student/view",
       element: <StudentProfilePage />
+    },
+    {
+      path: "/student/navbar",
+      element: <Navbar />
+    },
+    {
+      path: "/student/footer",
+      element: <Footer/>
+    },
+    {
+      path: "/student/about",
+      element: <About/>
+    },
+    {
+      path: "/student/home",
+      element: <Home />
+    }
+    ,
+    {
+      path: "/student/new",
+      element: <New />
     }
   ]);
+  
 
   return (
     <>

@@ -49,9 +49,9 @@ const Navbar = () => {
           <a href="#home" onClick={toggleMenu} className="block hover:underline">Home</a>
           <a href="#about" onClick={toggleMenu} className="block hover:underline">About</a>
           <a href="#contact" onClick={toggleMenu} className="block hover:underline">Contact Us</a>
-          <Link to="/profile" onClick={toggleMenu} className="block hover:underline">Profile</Link>
-          <Link to="/login" onClick={toggleMenu} className="block hover:underline">Login</Link>
-          <Link to="/signup" onClick={toggleMenu} className="block hover:underline">Signup</Link>
+          <Link to="/student/view" onClick={toggleMenu} className="block hover:underline">Profile</Link>
+          <Link to="/student/" onClick={toggleMenu} className="block hover:underline">Login</Link>
+          <Link to="/student/form" onClick={toggleMenu} className="block hover:underline">Signup</Link>
         </div>
       )}
     </nav>

@@ -19,7 +19,13 @@ const userSchema = new mongoose.Schema(
     phone: {
       type: String,
       required: true,
-      match: /^[0-9]{10}$/,
+      validate: {
+        validator: function(v) {
+          // Allow numbers with or without country code, spaces, or dashes
+          return /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/.test(v);
+        },
+        message: props => `${props.value} is not a valid phone number!`
+      }
     },
     email: {
       type: String,
@@ -34,6 +40,11 @@ const userSchema = new mongoose.Schema(
     profileImg: {
       type: String, // This should be the file name or URL
       default: "",  // Optional: Set default image path if needed
+    },
+    role: {
+      type: String,
+      enum: ["user", "admin"],
+      default: "user",
     },
   },
   {

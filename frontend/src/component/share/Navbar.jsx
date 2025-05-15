@@ -5,6 +5,14 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => setIsOpen(!isOpen);
+
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+    setIsOpen(false);
+  };
   
   return (
     <nav className="fixed top-0 w-full z-50 bg-green-600 text-white shadow-md">
@@ -14,11 +22,10 @@ const Navbar = () => {
 
         {/* Desktop Menu */}
         <div className="hidden lg:flex space-x-6">
-          <a href="#home" className="hover:underline">Home</a>
-          <a href="#about" className="hover:underline">About</a>
-          <a href="#contact" className="hover:underline">Contact Us</a>
+          <button onClick={() => scrollToSection('home')} className="hover:underline">Home</button>
+          <button onClick={() => scrollToSection('about')} className="hover:underline">About</button>
+          <button onClick={() => scrollToSection('contact')} className="hover:underline">Contact Us</button>
           <Link to="/student/view" className="hover:underline ">Profile</Link>
-          <Link to="/admin/students" className="hover:underline ">All Students</Link>
           <Link to="/student/" className="hover:underline">Login</Link>
           <Link to="/student/form" className="hover:underline">Signup</Link>
         </div>
@@ -47,9 +54,9 @@ const Navbar = () => {
       {/* Mobile Dropdown Menu */}
       {isOpen && (
         <div className="lg:hidden bg-green-700 text-white px-6 py-4 space-y-3 transition-all duration-300">
-          <a href="#home" onClick={toggleMenu} className="block hover:underline">Home</a>
-          <a href="#about" onClick={toggleMenu} className="block hover:underline">About</a>
-          <a href="#contact" onClick={toggleMenu} className="block hover:underline">Contact Us</a>
+          <button onClick={() => scrollToSection('home')} className="block hover:underline w-full text-left">Home</button>
+          <button onClick={() => scrollToSection('about')} className="block hover:underline w-full text-left">About</button>
+          <button onClick={() => scrollToSection('contact')} className="block hover:underline w-full text-left">Contact Us</button>
           <Link to="/student/view" onClick={toggleMenu} className="block hover:underline">Profile</Link>
           <Link to="/student/" onClick={toggleMenu} className="block hover:underline">Login</Link>
           <Link to="/student/form" onClick={toggleMenu} className="block hover:underline">Signup</Link>

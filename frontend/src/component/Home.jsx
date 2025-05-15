@@ -1,9 +1,9 @@
 import Footer from "./share/Footer";
 import Navbar from "./share/Navbar";
 import About from "./About";
-import ContactUs from "./Contactus";
 import { Link } from "react-router-dom";
 import Services from "./Services";
+import ContactUs from "./ContactUs";
 
 const Home = () => {
   return (

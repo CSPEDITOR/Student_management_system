@@ -8,9 +8,16 @@ export const registerUser = async (req, res) => {
     const { jeeAppNo, dob, rank, phone, email, password } = req.body;
 
     // Check if user already exists
-    const existingUser = await User.findOne({ email });
+    const existingUser = await User.findOne({ 
+      $or: [{ email }, { jeeAppNo }] 
+    });
+    
     if (existingUser) {
-      return res.status(400).json({ message: "User already exists with this email." });
+      return res.status(400).json({ 
+        message: existingUser.email === email 
+          ? "User already exists with this email." 
+          : "User already exists with this JEE Application Number." 
+      });
     }
 
     // Hash password
@@ -33,13 +40,30 @@ export const registerUser = async (req, res) => {
 
     await newUser.save();
 
-    res.status(201).json({ message: "User registered successfully", user: newUser });
+    // Return user data without password
+    const userResponse = {
+      id: newUser._id,
+      jeeAppNo: newUser.jeeAppNo,
+      email: newUser.email,
+      role: newUser.role,
+      profileImg: newUser.profileImg
+    };
+
+    res.status(201).json({ 
+      message: "User registered successfully", 
+      user: userResponse 
+    });
   } catch (error) {
     console.error("Registration Error:", error);
+    if (error.name === 'ValidationError') {
+      return res.status(400).json({ 
+        message: "Validation Error", 
+        errors: Object.values(error.errors).map(err => err.message)
+      });
+    }
     res.status(500).json({ message: "Server error" });
   }
 };
-
 
 // Login User with JWT
 export const loginUser = async (req, res) => {
@@ -72,6 +96,7 @@ export const loginUser = async (req, res) => {
         email: user.email,
         jeeAppNo: user.jeeAppNo,
         profileImg: user.profileImg,
+        role: user.role,
       },
     });
   } catch (error) {
@@ -90,6 +115,75 @@ export const getUserProfile = async (req, res) => {
     res.status(200).json(user);
   } catch (error) {
     console.error("Error fetching user profile:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+export const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find().select("-password");
+    res.status(200).json(users);
+  } catch (error) {
+    console.error("Error fetching all users:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+export const updateProfile = async (req, res) => {
+  try {
+    const userId = req.userId; // set by middleware
+    const { jeeAppNo, dob, rank, phone, email } = req.body;
+
+    // Find user by ID
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Check if email is being changed and if it's already taken
+    if (email && email !== user.email) {
+      const existingUser = await User.findOne({ email });
+      if (existingUser) {
+        return res.status(400).json({ message: "Email already in use" });
+      }
+    }
+
+    // Check if JEE Application Number is being changed and if it's already taken
+    if (jeeAppNo && jeeAppNo !== user.jeeAppNo) {
+      const existingUser = await User.findOne({ jeeAppNo });
+      if (existingUser) {
+        return res.status(400).json({ message: "JEE Application Number already in use" });
+      }
+    }
+
+    // Update user fields
+    const updateFields = {};
+    if (jeeAppNo) updateFields.jeeAppNo = jeeAppNo;
+    if (dob) updateFields.dob = dob;
+    if (rank) updateFields.rank = rank;
+    if (phone) updateFields.phone = phone;
+    if (email) updateFields.email = email;
+    if (req.file) updateFields.profileImg = req.file.filename;
+
+    // Update user
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { $set: updateFields },
+      { new: true, runValidators: true }
+    ).select("-password");
+
+    res.status(200).json({
+      message: "Profile updated successfully",
+      user: updatedUser
+    });
+  } catch (error) {
+    console.error("Profile Update Error:", error);
+    if (error.name === 'ValidationError') {
+      return res.status(400).json({
+        message: "Validation Error",
+        errors: Object.values(error.errors).map(err => err.message)
+      });
+    }
     res.status(500).json({ message: "Server error" });
   }
 };

@@ -25,11 +25,12 @@ function HomeForm({ userData }) {
       submittedAt: new Date().toISOString(),
     };
 
-    localStorage.setItem("lastSubmission", JSON.stringify(entry)); // 👈 overwrite the last form
+    // Generate a unique key for the activity
+    const activityKey = `activity_${Date.now()}`;
+    localStorage.setItem(activityKey, JSON.stringify(entry));
+    
     alert("Details submitted and stored successfully!");
-
-    // Navigate to profile page
-    navigate("/student/view"); // 👈 your route path
+    navigate("/student/view");
   };
 
   const options = [
@@ -41,6 +42,292 @@ function HomeForm({ userData }) {
     "Placement (Online/Office)",
     "Higher Study",
   ];
+
+  const renderDynamicFields = () => {
+    switch (selectedOption) {
+      case "Award/Achievement":
+        return (
+          <>
+            <Input
+              label="Award Name"
+              name="awardName"
+              onChange={handleDynamicInput}
+              placeholder="Enter award name"
+            />
+            <Input
+              label="Issuing Organization"
+              name="issuingOrganization"
+              onChange={handleDynamicInput}
+              placeholder="Enter organization name"
+            />
+            <Input
+              label="Date Received"
+              name="dateReceived"
+              type="date"
+              onChange={handleDynamicInput}
+            />
+            <Input
+              label="Description"
+              name="description"
+              onChange={handleDynamicInput}
+              placeholder="Enter award description"
+            />
+            <Input
+              label="Certificate Link"
+              name="certificateLink"
+              onChange={handleDynamicInput}
+              placeholder="Enter certificate URL"
+              optional={true}
+            />
+          </>
+        );
+
+      case "Conference/workshop/seminar":
+        return (
+          <>
+            <Input
+              label="Event Name"
+              name="eventName"
+              onChange={handleDynamicInput}
+              placeholder="Enter event name"
+            />
+            <Input
+              label="Organizing Institute"
+              name="organizingInstitute"
+              onChange={handleDynamicInput}
+              placeholder="Enter organizing institute"
+            />
+            <Input
+              label="Date"
+              name="date"
+              type="date"
+              onChange={handleDynamicInput}
+            />
+            <Input
+              label="Duration"
+              name="duration"
+              onChange={handleDynamicInput}
+              placeholder="e.g., 3 days"
+            />
+            <Input
+              label="Certificate Link"
+              name="certificateLink"
+              onChange={handleDynamicInput}
+              placeholder="Enter certificate URL"
+              optional={true}
+            />
+          </>
+        );
+
+      case "Internship":
+        return (
+          <>
+            <Input
+              label="Company/Organization"
+              name="company"
+              onChange={handleDynamicInput}
+              placeholder="Enter company name"
+            />
+            <Input
+              label="Position"
+              name="position"
+              onChange={handleDynamicInput}
+              placeholder="Enter your position"
+            />
+            <Input
+              label="Start Date"
+              name="startDate"
+              type="date"
+              onChange={handleDynamicInput}
+            />
+            <Input
+              label="End Date"
+              name="endDate"
+              type="date"
+              onChange={handleDynamicInput}
+            />
+            <Input
+              label="Stipend"
+              name="stipend"
+              onChange={handleDynamicInput}
+              placeholder="Enter stipend amount"
+              optional={true}
+            />
+            <Input
+              label="Certificate Link"
+              name="certificateLink"
+              onChange={handleDynamicInput}
+              placeholder="Enter certificate URL"
+              optional={true}
+            />
+          </>
+        );
+
+      case "GATE/UGCNET/CAT/SET":
+        return (
+          <>
+            <Input
+              label="Exam Name"
+              name="examName"
+              onChange={handleDynamicInput}
+              placeholder="Enter exam name"
+            />
+            <Input
+              label="Score"
+              name="score"
+              onChange={handleDynamicInput}
+              placeholder="Enter your score"
+            />
+            <Input
+              label="Rank"
+              name="rank"
+              onChange={handleDynamicInput}
+              placeholder="Enter your rank"
+            />
+            <Input
+              label="Year"
+              name="year"
+              type="number"
+              onChange={handleDynamicInput}
+              placeholder="Enter exam year"
+            />
+            <Input
+              label="Score Card Link"
+              name="scoreCardLink"
+              onChange={handleDynamicInput}
+              placeholder="Enter score card URL"
+              optional={true}
+            />
+          </>
+        );
+
+      case "Online Course":
+        return (
+          <>
+            <Input
+              label="Course Name"
+              name="courseName"
+              onChange={handleDynamicInput}
+              placeholder="Enter course name"
+            />
+            <Input
+              label="Platform"
+              name="platform"
+              onChange={handleDynamicInput}
+              placeholder="e.g., Coursera, Udemy"
+            />
+            <Input
+              label="Start Date"
+              name="startDate"
+              type="date"
+              onChange={handleDynamicInput}
+            />
+            <Input
+              label="Completion Date"
+              name="completionDate"
+              type="date"
+              onChange={handleDynamicInput}
+            />
+            <Input
+              label="Certificate Link"
+              name="certificateLink"
+              onChange={handleDynamicInput}
+              placeholder="Enter certificate URL"
+              optional={true}
+            />
+          </>
+        );
+
+      case "Placement (Online/Office)":
+        return (
+          <>
+            <Input
+              label="Company Name"
+              name="companyName"
+              onChange={handleDynamicInput}
+              placeholder="Enter company name"
+            />
+            <Input
+              label="Position"
+              name="position"
+              onChange={handleDynamicInput}
+              placeholder="Enter your position"
+            />
+            <Input
+              label="Package"
+              name="package"
+              onChange={handleDynamicInput}
+              placeholder="Enter package details"
+            />
+            <Input
+              label="Location"
+              name="location"
+              onChange={handleDynamicInput}
+              placeholder="Enter job location"
+            />
+            <Input
+              label="Joining Date"
+              name="joiningDate"
+              type="date"
+              onChange={handleDynamicInput}
+            />
+            <Input
+              label="Offer Letter Link"
+              name="offerLetterLink"
+              onChange={handleDynamicInput}
+              placeholder="Enter offer letter URL"
+              optional={true}
+            />
+          </>
+        );
+
+      case "Higher Study":
+        return (
+          <>
+            <Input
+              label="University/College"
+              name="university"
+              onChange={handleDynamicInput}
+              placeholder="Enter university name"
+            />
+            <Input
+              label="Program"
+              name="program"
+              onChange={handleDynamicInput}
+              placeholder="Enter program name"
+            />
+            <Input
+              label="Specialization"
+              name="specialization"
+              onChange={handleDynamicInput}
+              placeholder="Enter specialization"
+            />
+            <Input
+              label="Start Date"
+              name="startDate"
+              type="date"
+              onChange={handleDynamicInput}
+            />
+            <Input
+              label="Duration"
+              name="duration"
+              onChange={handleDynamicInput}
+              placeholder="e.g., 2 years"
+            />
+            <Input
+              label="Admission Letter Link"
+              name="admissionLetterLink"
+              onChange={handleDynamicInput}
+              placeholder="Enter admission letter URL"
+              optional={true}
+            />
+          </>
+        );
+
+      default:
+        return null;
+    }
+  };
 
   return (
     <div className="min-h-screen bg-green-50 p-6">
@@ -71,14 +358,10 @@ function HomeForm({ userData }) {
 
         {selectedOption && (
           <form onSubmit={handleDynamicSubmit} className="space-y-4">
-            {/* Similar conditional inputs as your original code */}
-            {/* ... Same conditional input JSX ... */}
-            {/* For brevity, not repeating here */}
-
+            {renderDynamicFields()}
             <button
               type="submit"
               className="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition"
-              onClick={ () => navigate("/student/view")}
             >
               Submit
             </button>

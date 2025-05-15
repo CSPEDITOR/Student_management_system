@@ -23,6 +23,8 @@ function Login() {
     try {
       const res = await axios.post("http://localhost:8080/api/users/login", credentials);
       alert("Login successful!");
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("userRole", res.data.user.role);
       console.log("User:", res.data.user);
       navigate("/student/welcomehome"); // Redirect after login
     } catch (error) {

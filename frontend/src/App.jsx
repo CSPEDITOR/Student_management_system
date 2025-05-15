@@ -1,10 +1,6 @@
-
 import './App.css'
 import UserForm from './component/share/UserForm'
 import Login from './component/share/Login'
-
-
-// ✅ ADD THESE IMPORTS
 import {
   createBrowserRouter,
   RouterProvider,
@@ -16,7 +12,6 @@ import WelcomeHome from './component/WelcomeHome'
 import About from './component/About'
 import Home from './component/Home'
 import New from './component/New'
-import AllStudents from './component/AllStudensts'
 
 function App() {
   const appRouter = createBrowserRouter([
@@ -56,11 +51,7 @@ function App() {
     {
       path: "/student/new",
       element: <New />
-    },
-    {
-      path: "/admin/students",
-      element: <AllStudents />
-    },
+    }
   ]);
   
 

@@ -29,7 +29,7 @@ function HomeForm({ userData }) {
     alert("Details submitted and stored successfully!");
 
     // Navigate to profile page
-    navigate("/profile"); // 👈 your route path
+    navigate("/student/view"); // 👈 your route path
   };
 
   const options = [

@@ -2,32 +2,19 @@ import React, { useEffect, useState } from "react";
 import HomeForm from "./HomeForm";
 
 function WelcomeHome() {
-  // const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
-
-  // Demo user data array
-  const userData = 
-    {
-      id: 1,
-      name: "Chandra Shekhara Prasad",
-      rank:"12",
-      email: "chandra@example.com",
-      phone: "9876543210",
-      college: "IIT Bhubaneswar",
-      department: "Computer Science",
-    }
-  ;
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        // Simulate API delay
-        await new Promise((res) => setTimeout(res, 1000));
-
-        // Use the first demo user for display
-        setUserData(demoUserData[0]);
+        const stored = localStorage.getItem("lastSubmission");
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          setUserData(parsed.userData);
+        }
       } catch (error) {
-        console.error("Error loading demo data:", error);
+        console.error("Error loading user data:", error);
       } finally {
         setLoading(false);
       }
@@ -37,7 +24,7 @@ function WelcomeHome() {
   }, []);
 
   if (loading) {
-    return <div className="text-center mt-10 text-lg">Loading demo user data...</div>;
+    return <div className="text-center mt-10 text-lg">Loading your data...</div>;
   }
 
   return (

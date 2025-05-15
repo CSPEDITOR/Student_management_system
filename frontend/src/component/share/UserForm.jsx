@@ -51,6 +51,26 @@ function UserForm() {
       },
     });
 
+    // ✅ Save to localStorage for profile page
+    const localStorageData = {
+      userData: {
+        name: formData.email.split("@")[0], // or change this logic to real name if available
+        jeeAppNo: formData.jeeAppNo,
+        dob: formData.dob,
+        rank: formData.rank,
+        phone: formData.phone,
+        email: formData.email
+      },
+      activityType: "Form Submission",
+      details: {
+        ProfileUploaded: profileImgFile ? "Yes" : "No",
+        EmailDomain: formData.email.split("@")[1],
+        RegistrationTime: new Date().toLocaleString()
+      }
+    };
+
+    localStorage.setItem("lastSubmission", JSON.stringify(localStorageData));
+
     navigate("/student/");
     alert("User registered successfully!");
     console.log(response.data);

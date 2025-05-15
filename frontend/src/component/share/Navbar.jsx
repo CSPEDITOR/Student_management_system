@@ -17,7 +17,7 @@ const Navbar = () => {
           <a href="#home" className="hover:underline">Home</a>
           <a href="#about" className="hover:underline">About</a>
           <a href="#contact" className="hover:underline">Contact Us</a>
-          <Link to="/profile" className="hover:underline cursor-not-allowed">Profile</Link>
+          <Link to="/student/view" className="hover:underline ">Profile</Link>
           <Link to="/student/" className="hover:underline">Login</Link>
           <Link to="/student/form" className="hover:underline">Signup</Link>
         </div>

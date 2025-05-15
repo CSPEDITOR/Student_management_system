@@ -20,7 +20,7 @@ function StudentProfilePage() {
       <div className="max-w-5xl mx-auto bg-white p-10 rounded-2xl shadow-lg">
         <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
           <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwIruIHt-pWsYeV9tjeDLlDn4tPKYywuAI64aUdMrXV3AebuZA7gC1ve8&usqp=CAE&s"
+            src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png"
             alt="Profile"
             className="w-40 h-40 rounded-full border-4 border-green-500 shadow-lg"
           />
@@ -30,7 +30,7 @@ function StudentProfilePage() {
             <div className="grid grid-cols-1 gap-4">
               <div className="flex items-center space-x-2">
                 <FaUser className="text-green-500" />
-                <p className="text-gray-700"><strong>JEE App No:</strong> {userData.jeeAppNo || "N/A"}</p>
+                <p className="text-gray-700"><strong>JEE App No:</strong> {userData.jeeAppNo || "JEE202500321"}</p>
               </div>
               <div className="flex items-center space-x-2">
                 <FaEnvelope className="text-green-500" />
@@ -42,7 +42,7 @@ function StudentProfilePage() {
               </div>
               <div className="flex items-center space-x-2">
                 <FaCalendarAlt className="text-green-500" />
-                <p className="text-gray-700"><strong>DOB:</strong> {userData.dob}</p>
+                <p className="text-gray-700"><strong>DOB:</strong> {userData.dob || "03-03-2001"}</p>
               </div>
               <p><strong>Rank:</strong> {userData.rank}</p>
             </div>

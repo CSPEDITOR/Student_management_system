@@ -20,6 +20,11 @@ import New from './component/New'
 function App() {
   const appRouter = createBrowserRouter([
     {
+      path: "/",
+      element: <Home />
+    }
+    ,
+    {
       path: "/student/",
       element: <Login />
     },
@@ -47,11 +52,6 @@ function App() {
       path: "/student/about",
       element: <About/>
     },
-    {
-      path: "/student/home",
-      element: <Home />
-    }
-    ,
     {
       path: "/student/new",
       element: <New />

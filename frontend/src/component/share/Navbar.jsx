@@ -5,7 +5,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => setIsOpen(!isOpen);
-
+  
   return (
     <nav className="fixed top-0 w-full z-50 bg-green-600 text-white shadow-md">
       <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">

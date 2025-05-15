@@ -1,14 +1,37 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import HomeForm from "./HomeForm";
 
 function WelcomeHome() {
-  const dummyUserData = {
-    jeeAppNo: "JEE20250123",
-    dob: "2003-01-14",
-    rank: "1123",
-    phone: "9876543210",
-    email: "user@example.com",
-  };
+  const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await fetch("http://localhost:8080/api/users/profile", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch user data");
+        }
+
+        const data = await response.json();
+        setUserData(data);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
+  if (loading) return <div className="text-center mt-10 text-lg">Loading user data...</div>;
 
   return (
     <div className="min-h-screen w-full bg-green-50 flex items-center justify-center px-4">
@@ -20,8 +43,8 @@ function WelcomeHome() {
           Please verify or edit your details below before proceeding.
         </p>
 
-        {/* Pass the dummy data to HomeForm */}
-        <HomeForm userData={dummyUserData} />
+        {/* Pass fetched data to HomeForm */}
+        {userData ? <HomeForm userData={userData} /> : <p>No user data found</p>}
       </div>
     </div>
   );

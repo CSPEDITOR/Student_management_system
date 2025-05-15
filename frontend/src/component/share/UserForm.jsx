@@ -1,4 +1,6 @@
 import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function UserForm() {
   const [formData, setFormData] = useState({
@@ -9,25 +11,54 @@ function UserForm() {
     email: "",
     password: "",
   });
+  const navigate = useNavigate();
 
   const [profileImg, setProfileImg] = useState(null);
+  const [profileImgFile, setProfileImgFile] = useState(null); // file for backend
+
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setProfileImg(URL.createObjectURL(file));
-    }
-  };
+  const file = e.target.files[0];
+  if (file) {
+    setProfileImg(URL.createObjectURL(file)); // for preview
+    setProfileImgFile(file); // for backend
+  }
+};
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log({ ...formData, profileImg });
-    alert("Form submitted successfully!");
-  };
+
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    const data = new FormData();
+    data.append("jeeAppNo", formData.jeeAppNo);
+    data.append("dob", formData.dob);
+    data.append("rank", formData.rank);
+    data.append("phone", formData.phone);
+    data.append("email", formData.email);
+    data.append("password", formData.password);
+    if (profileImgFile) {
+      data.append("profileImg", profileImgFile); // important: real File object
+    }
+
+    const response = await axios.post("http://localhost:8080/api/users/register", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    navigate("/student/");
+    alert("User registered successfully!");
+    console.log(response.data);
+  } catch (error) {
+    console.error("Registration failed:", error.response?.data || error.message);
+    alert("Registration failed. Please try again.");
+  }
+};
 
   return (
     <div className="w-1/2 mx-auto mt-16 p-8 bg-white shadow-xl rounded-2xl">
